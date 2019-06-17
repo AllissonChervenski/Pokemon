@@ -1,8 +1,8 @@
-public class No {
+public class No{
     private No proximo;
     private No anterior;
     private Pokemon info;
-    private int idPok = 0;
+    private int id = 0;
 
     public No(Pokemon p){
         this.info = p;
@@ -10,12 +10,12 @@ public class No {
         this.setAnterior(null);
     }
 
-    public int getIdPok() {
-        return idPok;
+    public int getId() {
+        return id;
     }
 
-    public void setIdPok(int idPok) {
-        this.idPok = idPok;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public No getProximo() {

@@ -18,37 +18,39 @@ public class Lista {
         if (inicio == null) {
             this.setInicio(novo);
             this.setFim(novo);
-            novo.setIdPok(nElementos);
+            novo.setId(nElementos);
             pokFogo(info);
             nElementos++;
-        }
-        else {
+        } else {
             novo.setAnterior(this.fim);
             fim.setProximo(novo);
             fim = novo;
-            novo.setIdPok(nElementos);
             pokFogo(info);
+            novo.setId(nElementos);
             nElementos++;
+        }
+
+        return true;
+    }
+
+    public boolean addDezMil() {
+        while (size() < 10000) {
+            Pokemon p = new Pokemon();
+            this.add(p);
         }
         return true;
     }
 
-    public boolean addDezMil(){
-        while(size() < 10000){
-            Pokemon p = new Pokemon();
-            this.add(p);
-        }
-        return true;
-        }
-    public boolean addCemMil(){
-        while(size() < 100000){
+    public boolean addCemMil() {
+        while (size() < 100000) {
             Pokemon p = new Pokemon();
             this.add(p);
         }
         return true;
     }
-    public boolean addUmMilhao(){
-        while(size() < 1000000){
+
+    public boolean addUmMilhao() {
+        while (size() < 1000000) {
             Pokemon p = new Pokemon();
             this.add(p);
         }
@@ -62,10 +64,10 @@ public class Lista {
         nElementos = 0;
     }
 
-    public boolean contains(Pokemon info) {
+    public boolean contains(String info) {
         No aux = inicio;
         while (aux != null) {
-            if (aux.getInfo() == info) {
+            if (aux.getInfo().getNome().equals(info)) {
                 return true;
             }
             aux = aux.getProximo();
@@ -73,31 +75,33 @@ public class Lista {
         return false;
     }
 
-
-    public boolean remove(Pokemon info) {
-        No atual = inicio;
-        if (atual != null) {
-            if (atual.getInfo() == info) {
-                if (atual == fim) {
-                    atual = null;
-                    fim = null;
-                } else if (atual.getAnterior() != null && atual.getProximo() != null) {
-                    atual.getAnterior().setProximo(atual.getProximo());
-                    atual.getProximo().setAnterior(atual.getAnterior());
+    public void remove(Pokemon e) {
+        No aux = inicio;
+        while (aux != null) {
+            if (aux.getInfo().getNome().equals(e.getNome())) {
+                if (aux == fim && aux.getAnterior() != null) {
+                    fim = aux.getAnterior();
+                    fim.setProximo(null);
+                } else if (aux == inicio && aux.getProximo() != null) {
+                    inicio = aux.getProximo();
+                    inicio.setAnterior(null);
+                } else if (aux.getAnterior() != null && aux.getProximo() != null) {
+                    aux.getAnterior().setProximo(aux.getProximo());
+                    aux.getProximo().setAnterior(aux.getAnterior());
+                } else if (aux == inicio && aux == fim) {
+                    this.clear();
                 }
-            } else {
-                atual = atual.getProximo();
             }
+            aux = aux.getProximo();
         }
-        nElementos--;
-        return true;
+        nElementos --;
     }
 
-    public int indexOf(Pokemon info) {
+    public int indexOf(String info) {
         int contador = 0;
         if (inicio != null) {
             No atual = inicio;
-            while (atual.getInfo() != info) {
+            while (!atual.getInfo().getNome().equals(info)) {
                 if (atual.getProximo() != null) {
                     atual = atual.getProximo();
                     contador++;
@@ -110,6 +114,7 @@ public class Lista {
         return -1;
     }
 
+
     public boolean isEmpty() {
         if (inicio == null && fim == null) {
             return true;
@@ -121,7 +126,7 @@ public class Lista {
         return nElementos;
     }
 
-    public void set(int indice, int info) {
+    public void set(int indice, Pokemon info) {
 
     }
 
@@ -137,15 +142,65 @@ public class Lista {
         return "Nada";
     }
 
-    public void pokFogo(Pokemon p){
-        if(p.getTipo().equals("Fogo")){
+    public void pokFogo(Pokemon p) {
+        if (p.getTipo().equals("Fogo")) {
             this.contFogo = getContFogo() + 1;
         }
     }
 
-    public String printFogo(){
+    public String toString() {
+        String poks = "";
+        No atual = inicio;
+        while (atual != null) {
+            poks += atual.getId() + " " + atual.getInfo().toString() + '\n';
+            atual = atual.getProximo();
+        }
+        return poks;
+    }
+
+
+    public String printFogo() {
         return "Quantidade de pokemons tipo fogo: " + contFogo;
     }
+
+    public void ordena() {
+        No atual = inicio;
+        No aux;
+        No aux1 = atual.getProximo();
+        while (atual.getProximo() != null){
+            while (aux1 != null) {
+                if (atual.getInfo().compareTo(aux1.getInfo()) > 0) {
+                    //um novo objeto para copiar o proximo do aux1
+                    aux = new No(aux1.getInfo());
+                    aux.setProximo(aux1.getProximo());
+                    aux.setAnterior(aux.getAnterior());
+
+                    aux1.setInfo(atual.getInfo());
+                    atual.setInfo(aux.getInfo());
+                    aux1 = aux1.getProximo();
+                } else {
+                    aux1 = aux1.getProximo();
+                }
+            }
+        atual = atual.getProximo();
+        aux1 = atual.getProximo();
+    }
+}
+
+    public void removeAgua(){
+        No atual = inicio;
+        while(atual != null){
+            if(atual.getInfo().getTipo().equals("Agua")){
+                remove(atual.getInfo());
+                atual = atual.getProximo();
+            }
+            atual = atual.getProximo();
+        }
+}
+
+
+
+
 
     public No getInicio() {
         return inicio;
@@ -169,34 +224,6 @@ public class Lista {
 
     public void setnElementos(int nElementos) {
         this.nElementos = nElementos;
-    }
-    private void leArquivo(){
-        File arquivoPokemons = new File("C:\\Users\\ultra\\Downloads\\Pokemon\\Pokemon\\src\\StringRetorno.txt");
-        BufferedReader input;
-        String pokemon;
-        String [] ;
-
-        try {
-            input = new BufferedReader(new InputStreamReader(new FileInputStream(arquivoPokemons)));
-            while ((pokemon = input.readLine()) != null) {
-                atributos = pokemon.split(" ");
-                nomes.add(atributos[0]);
-                tipos.add(atributos[1]);
-                quantidade++;
-            }
-            input.close();
-        } catch (IOException ex) {
-            Logger.getLogger(GeradorDePokemons.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public String toString() {
-        No atual = inicio;
-        String poks = "";
-        while (atual != fim) {
-            poks += atual.getIdPok() + " " + atual.getInfo().toString() + '\n';
-            atual = atual.getProximo();
-        }
-        return poks;
     }
 
     public int getContFogo() {
