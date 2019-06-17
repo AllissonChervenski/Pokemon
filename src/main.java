@@ -9,20 +9,17 @@ public class main {
 
 
         Lista lista = new Lista();
-        lista.add(pok);
-        lista.add(p);
-        lista.add(pk);
-        lista.add(pk);
-
-
+        
         lista.addDezMil();
+        System.out.println("Tempo de adição de 10000 pokemons: " + System.nanoTime());
+
         lista.removeAgua();
+        System.out.println("Tempo de remoção pokemons tipo agua: " + System.nanoTime());
+
         lista.ordena();
+        System.out.println(lista.toString() + "Tempo de apresentação: " +  System.nanoTime());
 
-
-
-        System.out.println(lista.toString());
-        System.out.println(lista.printFogo());
+        System.out.println(lista.printFogo() + '\n' + "Tempo de remoção de pokemons tipo fogo: " + System.nanoTime());
         System.out.println("Numero de elementos: " + lista.size());
     }
 }

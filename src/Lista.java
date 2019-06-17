@@ -128,7 +128,7 @@ public class Lista {
     public int size() {
         return nElementos;
     }
-    
+
     public void sortNumbers(){
         No atual = inicio;
         int i = 0;
