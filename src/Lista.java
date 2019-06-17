@@ -80,21 +80,24 @@ public class Lista {
         while (aux != null) {
             if (aux.getInfo().getNome().equals(e.getNome())) {
                 if (aux == fim && aux.getAnterior() != null) {
-                    fim = aux.getAnterior();
+                                        fim = aux.getAnterior();
                     fim.setProximo(null);
+                    nElementos --;
                 } else if (aux == inicio && aux.getProximo() != null) {
                     inicio = aux.getProximo();
                     inicio.setAnterior(null);
+                    nElementos --;
                 } else if (aux.getAnterior() != null && aux.getProximo() != null) {
                     aux.getAnterior().setProximo(aux.getProximo());
                     aux.getProximo().setAnterior(aux.getAnterior());
+                    nElementos --;
                 } else if (aux == inicio && aux == fim) {
                     this.clear();
+                    nElementos = 0;
                 }
             }
             aux = aux.getProximo();
         }
-        nElementos --;
     }
 
     public int indexOf(String info) {
@@ -125,9 +128,15 @@ public class Lista {
     public int size() {
         return nElementos;
     }
-
-    public void set(int indice, Pokemon info) {
-
+    
+    public void sortNumbers(){
+        No atual = inicio;
+        int i = 0;
+        while(atual != null){
+            atual.setId(i);
+            atual = atual.getProximo();
+            i++;
+        }
     }
 
     public String get(int indice) {
@@ -185,12 +194,13 @@ public class Lista {
         atual = atual.getProximo();
         aux1 = atual.getProximo();
     }
+    sortNumbers();
 }
 
     public void removeAgua(){
         No atual = inicio;
         while(atual != null){
-            if(atual.getInfo().getTipo().equals("Agua")){
+            if(atual.getInfo().getTipo().contains("Agua")){
                 remove(atual.getInfo());
                 atual = atual.getProximo();
             }

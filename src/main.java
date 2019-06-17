@@ -13,16 +13,16 @@ public class main {
         lista.add(p);
         lista.add(pk);
         lista.add(pk);
+
+
         lista.addDezMil();
-
-
         lista.removeAgua();
         lista.ordena();
 
 
 
         System.out.println(lista.toString());
-        System.out.println(lista.size());
         System.out.println(lista.printFogo());
+        System.out.println("Numero de elementos: " + lista.size());
     }
 }
