@@ -9,7 +9,7 @@ public class main {
 
 
         Lista lista = new Lista();
-        
+
         lista.addDezMil();
         System.out.println("Tempo de adição de 10000 pokemons: " + System.nanoTime());
 
