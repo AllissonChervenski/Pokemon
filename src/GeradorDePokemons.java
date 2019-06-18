@@ -26,7 +26,7 @@ public class GeradorDePokemons {
     }
 
     private void leArquivo(){
-        File arquivoPokemons = new File("C:\\Users\\ultra\\Downloads\\Pokemon\\Pokemon\\src\\Pokemons.txt");
+        File arquivoPokemons = new File("C:\\Users\\gabri\\Desktop\\Home-Work\\Trabalhooooo\\Pokemon\\src\\Pokemons.txt");
         BufferedReader input;
         String pokemon;
         String [] atributos;

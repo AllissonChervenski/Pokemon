@@ -197,6 +197,8 @@ public class Lista {
     sortNumbers();
 }
 
+
+
     public void removeAgua(){
         No atual = inicio;
         while(atual != null){
