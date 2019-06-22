@@ -1,6 +1,8 @@
 public class Arvore {
     private Nodo raiz;
     private int nElementos = 0;
+
+    private int contFogo = 0;
     public Arvore(){
     this.setRaiz(null);
     }
@@ -8,10 +10,11 @@ public class Arvore {
     public boolean add(Pokemon p) {
         Nodo novo;
         novo = new Nodo(p);
-        novo.setChave(nElementos);
+        novo.setChave(getnElementos());
         if(raiz == null){
             raiz = novo;
-             nElementos+=1;
+            pokFogo(novo.getInfo());
+             nElementos = getnElementos() + 1;
             return true;
         }
         return add(raiz, novo);
@@ -24,9 +27,10 @@ public class Arvore {
         else if(novo.getChave() < atual.getChave()){
             if(atual.getEsq() == null){
                 atual.setEsq(novo);
-                novo.setChave(nElementos);
+                novo.setChave(getnElementos());
                 novo.setPai(atual);
-                nElementos += 1;
+                pokFogo(novo.getInfo());
+                nElementos = getnElementos() + 1;
                 return true;
             }
             else{
@@ -36,9 +40,10 @@ public class Arvore {
         else{
             if(atual.getDir() == null){
                 atual.setDir(novo);
-                novo.setChave(nElementos);
+                novo.setChave(getnElementos());
                 novo.setPai(atual);
-                nElementos += 1;
+                pokFogo(novo.getInfo());
+                nElementos = getnElementos() + 1;
                 return true;
             }
             else{
@@ -74,16 +79,42 @@ public class Arvore {
       }
     }
 
+    public void pokFogo(Pokemon p) {
+        if (p.getTipo().equals("Fogo")) {
+            this.setContFogo(getContFogo() + 1);
+        }
+    }
+
+
     public void verificarBalanceamento(Nodo atual){
         setBalanceamento(atual);
         int balanceamento = atual.getBalanceamento();
 
-        if(balanceamento == -2){
-            if(altura(atual.getEsq().getEsq()) >= altura(atual.getEsq().getDir())){
+        if (balanceamento == -2) {
+
+            if (altura(atual.getEsq().getEsq()) >= altura(atual.getEsq().getDir())) {
                 atual = rotacaoDireita(atual);
+
+            } else {
+                atual = duplaRotacaoEsquerdaDireita(atual);
+            }
+
+        } else if (balanceamento == 2) {
+
+            if (altura(atual.getDir().getDir()) >= altura(atual.getDir().getEsq())) {
+                atual = rotacaoEsquerda(atual);
+
+            } else {
+                atual = duplaRotacaoDireitaEsquerda(atual);
             }
         }
-    }
+
+        if (atual.getPai() != null) {
+            verificarBalanceamento(atual.getPai());
+        } else {
+            this.raiz = atual;
+        }
+}
 
     public int altura(Nodo atual){
         if(atual == null){
@@ -291,6 +322,7 @@ public class Arvore {
         return true;
     }
 
+
     public Nodo getRaiz() {
         return raiz;
     }
@@ -299,4 +331,15 @@ public class Arvore {
         this.raiz = raiz;
     }
 
+    public int getnElementos() {
+        return nElementos;
+    }
+
+    public int getContFogo() {
+        return contFogo;
+    }
+
+    public void setContFogo(int contFogo) {
+        this.contFogo = contFogo;
+    }
 }
