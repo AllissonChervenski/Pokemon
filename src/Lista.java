@@ -13,7 +13,7 @@ public class Lista {
         this.setFim(null);
     }
 
-    public boolean add(Pokemon info) {
+    public void add(Pokemon info) {
         No novo = new No(info);
         if (inicio == null) {
             this.setInicio(novo);
@@ -29,8 +29,6 @@ public class Lista {
             novo.setId(nElementos);
             nElementos++;
         }
-
-        return true;
     }
 
     public boolean addDezMil() {
@@ -202,7 +200,7 @@ public class Lista {
     public void removeAgua(){
         No atual = inicio;
         while(atual != null){
-            if(atual.getInfo().getTipo().contains("Agua")){
+            if(atual.getInfo().getTipo().equals("Agua")){
                 remove(atual.getInfo());
                 atual = atual.getProximo();
             }

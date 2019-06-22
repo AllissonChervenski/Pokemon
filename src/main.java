@@ -5,21 +5,31 @@ public class main {
         Pokemon pk = new Pokemon();
 
 
-        System.out.println(GeradorDePokemons.getInstancia().toString());
+        System.out.println((GeradorDePokemons.getInstancia().toString()));
 
 
         Lista lista = new Lista();
 
+        long inicio = System.nanoTime() / 1000;
         lista.addDezMil();
-        System.out.println("Tempo de adição de 10000 pokemons: " + System.nanoTime());
+        long fim = System.nanoTime() / 1000;
+        System.out.println("Tempo de adição de 10000 pokemons: " + (fim - inicio));
 
+        inicio = System.nanoTime() / 1000;
         lista.removeAgua();
-        System.out.println("Tempo de remoção pokemons tipo agua: " + System.nanoTime());
+        fim = System.nanoTime() / 1000;
+        System.out.println("Tempo de remoção pokemons tipo agua: " + (fim - inicio));
 
+        inicio = System.nanoTime() / 1000;
         lista.ordena();
-        System.out.println(lista.toString() + "Tempo de apresentação: " +  System.nanoTime());
+        fim = System.nanoTime() / 1000;
+        System.out.println(lista.toString() + "Tempo de apresentação: " + (fim - inicio));
 
-        System.out.println(lista.printFogo() + '\n' + "Tempo de remoção de pokemons tipo fogo: " + System.nanoTime());
+        inicio = System.nanoTime() / 1000;
+        System.out.println(lista.printFogo());
+        fim = System.nanoTime() / 1000;
+        System.out.println("Tempo de contagem de pokemons tipo fogo: " + (fim - inicio));
+
         System.out.println("Numero de elementos: " + lista.size());
     }
 }
